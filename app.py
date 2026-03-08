@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, redirect, url_for
 import random
 
 app = Flask(__name__)
@@ -10,6 +10,7 @@ def home():
     if "number" not in session:
         session["number"] = random.randint(1, 100)
         session["count"] = 0
+        print(session["count"])
 
     message = None
 
@@ -19,16 +20,11 @@ def home():
 
         if guess == session["number"]:
             message = "win"
-            number = session["number"]
-            count = session["count"]
-
-            session.clear()
-
             return render_template(
                 "index.html",
                 message=message,
-                number=number,
-                count=count
+                number=session["number"],
+                count=session["count"]
             )
 
         elif guess > session["number"]:
@@ -39,10 +35,14 @@ def home():
 
     return render_template(
         "index.html",
-        message=message,
-        count=session.get("count", 0),
-        number=session.get("number")
+        message=message
     )
+
+
+@app.route("/replay")
+def replay():
+    session.clear()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
