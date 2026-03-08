@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number Game</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(90deg,#7b5dc9,#6ea2ff);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 80px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 30px;
+            background: #6b3fa0;
+            color: white;
+            border: none;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>I am Thinking of a number Between 1-100.<br>Can you Guess it</h2>
+
+    <form method="POST">
+        <input type="number" name="guess" id="guessInput" required>
+        <br>
+        <button type="submit">GUESS</button>
+    </form>
+
+    {% if message == "higher" %}
+    <p>Guess a little higher</p>
+    {% endif %}
+
+    {% if message == "lower" %}
+    <p>Guess a little lower</p>
+    {% endif %}
+
+    {% if message == "win" %}
+    <p><b>Yahhhh You won it!!</b></p>
+    <p>The number was {{number}}</p>
+    <p>You guessed it in {{count}} guesses</p>
+    {% endif %}
+</div>
+
+<script>
+    // Auto-focus the input after page reload
+    window.onload = function() {
+        const input = document.getElementById('guessInput');
+        if (input) {
+            input.focus();
+        }
+    }
+</script>
+
+</body>
+</html>
